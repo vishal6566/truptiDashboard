@@ -38,11 +38,26 @@ exports.getAllOrders = catchAsyncHandler(async (req, res, next) => {
 //get single order
 
 exports.getSingleOrder = catchAsyncHandler(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate("user","name");
+  const order = await Order.findById(req.params.id).populate("user", "name");
 
   if (!order) {
     return next(new ErrorHandler("Order not found"), 404);
   }
+  res.status(200).json({
+    success: true,
+    order,
+  });
+});
+
+//update shipped status
+
+exports.updateOrderStatus = catchAsyncHandler(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    return next(new ErrorHandler("Order not found"), 404);
+  }
+  order.shipped = true;
+  await order.save();
   res.status(200).json({
     success: true,
     order,
