@@ -10,9 +10,11 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 //Routes imports
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
+const orderRoute = require("./routes/orderRoute");
 
 app.use("/api/v1", userRoute);
 app.use("/api/v1", productRoute);
+app.use("/api/v1", orderRoute);
 //middleware for error
 app.use(errorMiddleware);
 

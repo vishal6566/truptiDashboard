@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const catchAsyncHandler = require("../middlewares/catchAsyncError");
-const catchAsyncError = require("../middlewares/catchAsyncError");
+
 const ErrorHandler = require("../utils/errorhandler");
 const sendToken = require("../utils/jwtToken");
 //Register a user
@@ -19,7 +19,7 @@ exports.registerUser = catchAsyncHandler(async (req, res, next) => {
 
 //login a user
 
-exports.loginUser = catchAsyncError(async (req, res, next) => {
+exports.loginUser = catchAsyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
