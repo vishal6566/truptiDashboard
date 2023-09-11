@@ -1,0 +1,16 @@
+.homeContainer{
+    width: 100%;
+
+    display: flex;
+    gap: 1%;
+}
+.homeContainer > div:first-child {
+    width: 16%;
+    
+   
+  }
+  .homeContainer > div:last-child {
+    width: 83%;
+  
+    height: 100vh;
+  }

@@ -19,12 +19,12 @@ const Login = () => {
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
    
     axios
@@ -63,7 +63,7 @@ const Login = () => {
             <img src={logo} alt="logo" />
           </div>
           <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLoginSubmit}>
               <FormControl>
                 <Heading as="h4" size="md" mt={5}>
                   Sign In
@@ -73,7 +73,7 @@ const Login = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  onChange={handleChange}
+                  onChange={handleLoginChange}
                   value={loginData.email}
                   mt={5}
                 />
@@ -82,7 +82,7 @@ const Login = () => {
                   type="password"
                   placeholder="Password"
                   name="password"
-                  onChange={handleChange}
+                  onChange={handleLoginChange}
                   value={loginData.password}
                   mt={5}
                 />
@@ -90,7 +90,10 @@ const Login = () => {
                 <Button colorScheme="blue" mt={5} w="100%" type="submit">
                   Sign In
                 </Button>
-                <Box className="newUserBox">
+            
+              </FormControl>
+            </form>
+            <Box className="newUserBox">
                   <Text fontSize="md" mt={2}>
                     New User ?
                   </Text>
@@ -98,8 +101,6 @@ const Login = () => {
                     <SignUp />
                   </div>
                 </Box>
-              </FormControl>
-            </form>
           </div>
         </div>
       </div>

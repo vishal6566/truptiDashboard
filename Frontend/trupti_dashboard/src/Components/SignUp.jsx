@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,20 +11,71 @@ import {
   DrawerOverlay,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  Select,
   Stack,
   Text,
-  Textarea,
-} from "@chakra-ui/react"; // Import Chakra UI components
-import { AddIcon } from "@chakra-ui/icons"; // Import Chakra UI icons
+ useToast
+} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/hooks";
+import axios from "axios";
+
 const SignUp = () => {
+  const toast=useToast()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
+  const [signupData, setSignupData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
+  const handleSignupChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData({ ...signupData, [name]: value });
+  };
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+   
+    axios
+      .post("http://localhost:4000/api/v1/register", signupData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast({
+          title: 'SignUp Successfully',
+          description: "You will be redireted to dashboard page.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+       
+      })
+      .catch((err) => {
+        let message=err.response.data.message;
+        console.log(message)
+        console.log(signupData.email)
+        if(message===`E11000 duplicate key error collection: trupti.users index: email_1 dup key: { email: "${signupData.email}" }`){
+          message="Email is already registered."
+        }
+        toast({
+         title: 'SignUp Failed',
+         description: message,
+         status: 'error',
+         duration: 3000,
+         isClosable: true,
+       })
+
+      });
+      
+  };
+  const clearData=()=>{
+    setSignupData({...signupData,email:"",password:"",name:""})
+  }
+  const clearAndClose=()=>{
+    clearData();
+    onClose();
+  }
   return (
     <>
       <Text mt={2} leftIcon={<AddIcon />} color="teal" onClick={onOpen}>
@@ -43,34 +94,52 @@ const SignUp = () => {
           <DrawerHeader borderBottomWidth="1px">
             Create a new account
           </DrawerHeader>
+          <form onSubmit={handleSignupSubmit}>
+            <DrawerBody>
+              <Stack spacing="24px">
+                <Box>
+                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <Input
+                    ref={firstField}
+                    placeholder="Please enter user name"
+                    name="name"
+                    value={signupData.name}
+                    onChange={handleSignupChange}
+                  />
+                </Box>
 
-          <DrawerBody>
-            <Stack spacing="24px">
-              <Box>
-                <FormLabel htmlFor="name">Name</FormLabel>
-                <Input ref={firstField} placeholder="Please enter user name" />
-              </Box>
+                <Box>
+                  <FormLabel htmlFor="name">Email</FormLabel>
+                  <Input
+                    placeholder="Please enter user email"
+                    name="email"
+                    type="email"
+                    onChange={handleSignupChange}
+                    value={signupData.email}
+                  />
+                </Box>
 
-              <Box>
-                <FormLabel htmlFor="name">Email</FormLabel>
-                <Input placeholder="Please enter user email" />
-              </Box>
-
-              <Box>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input placeholder="Please enter user password" />
-              </Box>
-
-             
-            </Stack>
-          </DrawerBody>
-
-          <DrawerFooter borderTopWidth="1px">
-            <Button variant="outline" mr={3} onClick={onClose}>
+                <Box>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <Input
+                    placeholder="Please enter user password"
+                    name="password"
+                    type="password"
+                    value={signupData.password}
+                    onChange={handleSignupChange}
+                  />
+                </Box>
+              </Stack>
+            </DrawerBody>
+            <DrawerFooter borderTopWidth="1px">
+            <Button variant="outline" mr={3} onClick={clearAndClose} >
               Cancel
             </Button>
-            <Button colorScheme="blue">SignUp</Button>
+            <Button colorScheme="blue" type="submit">SignUp</Button>
           </DrawerFooter>
+          </form>
+
+          
         </DrawerContent>
       </Drawer>
     </>
