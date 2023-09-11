@@ -6,8 +6,7 @@ import {IoFastFoodOutline} from "react-icons/io5"
 import {FaArrowTrendUp}from "react-icons/fa6"
 import {MdNightlightRound} from "react-icons/md"
 import {BsFillSunFill, BsFillCartFill}from "react-icons/bs"
-import AllRoutes from "../routes/AllRoutes";
-import Dashboard from "./Dashboard";
+
 const SideNavbar = () => {
     const [day,setDay]=useState(true);
 
