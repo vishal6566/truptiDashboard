@@ -58,7 +58,7 @@ const SignUp = () => {
 
               <Box>
                 <FormLabel htmlFor="password">Password</FormLabel>
-                <Input placeholder="Please enter user Password" />
+                <Input placeholder="Please enter user password" />
               </Box>
 
              

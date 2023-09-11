@@ -1,9 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Styles/login.css";
 import { loginBannerImage, logo } from "../utils/image";
-import { FormControl, Button, Input, Heading, Text,Box } from "@chakra-ui/react";
+import {
+  FormControl,
+  Button,
+  Input,
+  Heading,
+  Text,
+  Box,
+  useToast
+} from "@chakra-ui/react";
 import SignUp from "./SignUp";
+import axios from "axios";
 const Login = () => {
+  const toast = useToast()
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+   
+    axios
+      .post("http://localhost:4000/api/v1/login", loginData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast({
+          title: 'SignIn Successfully',
+          description: "You will be redireted to dashboard page.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .catch((err) => {
+       let message=err.response.data.message;
+       toast({
+        title: 'SignIn Failed',
+        description: message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+
+      });
+      
+  };
+
   return (
     <div className="container">
       <div className="loginContainer">
@@ -12,27 +63,43 @@ const Login = () => {
             <img src={logo} alt="logo" />
           </div>
           <div>
-            <FormControl>
-              <Heading as="h4" size="md" mt={5}>
-                Sign In
-              </Heading>
+            <form onSubmit={handleSubmit}>
+              <FormControl>
+                <Heading as="h4" size="md" mt={5}>
+                  Sign In
+                </Heading>
 
-              <Input type="email" placeholder="Email" mt={5} />
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                  value={loginData.email}
+                  mt={5}
+                />
 
-              <Input type="password" placeholder="password" mt={5} />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                  value={loginData.password}
+                  mt={5}
+                />
 
-              <Button colorScheme="blue" mt={5} w="100%">
-                Sign In
-              </Button>
-              <Box className="newUserBox">
-              <Text fontSize="md" mt={2}>
-                New User ?
-              </Text>
-              <div className="signupDiv"><SignUp /></div>
-              
-              </Box>
-             
-            </FormControl>
+                <Button colorScheme="blue" mt={5} w="100%" type="submit">
+                  Sign In
+                </Button>
+                <Box className="newUserBox">
+                  <Text fontSize="md" mt={2}>
+                    New User ?
+                  </Text>
+                  <div className="signupDiv">
+                    <SignUp />
+                  </div>
+                </Box>
+              </FormControl>
+            </form>
           </div>
         </div>
       </div>
