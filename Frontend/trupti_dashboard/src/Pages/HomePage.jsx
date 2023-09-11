@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNavbar from './SideNavbar'
-import AllRoutes from '../routes/AllRoutes'
+
 import "../Styles/homepage.css"
 
 import { Outlet } from 'react-router-dom';

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../Styles/login.css";
 import { loginBannerImage, logo } from "../utils/image";
+import { useNavigate } from 'react-router-dom';
+
 import {
   FormControl,
   Button,
@@ -13,6 +15,7 @@ import {
 import SignUp from "./SignUp";
 import axios from "axios";
 const Login = () => {
+  const navigate=useNavigate()
   const toast = useToast()
   const [loginData, setLoginData] = useState({
     email: "",
@@ -24,10 +27,10 @@ const Login = () => {
     setLoginData({ ...loginData, [name]: value });
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit =async (e) => {
     e.preventDefault();
    
-    axios
+   await axios
       .post("http://localhost:4000/api/v1/login", loginData, {
         withCredentials: true,
       })
@@ -40,6 +43,9 @@ const Login = () => {
           duration: 3000,
           isClosable: true,
         })
+        setTimeout(()=>{
+          navigate("/home")
+        },2000)
       })
       .catch((err) => {
        let message=err.response.data.message;

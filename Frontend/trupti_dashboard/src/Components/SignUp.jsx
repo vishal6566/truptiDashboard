@@ -18,8 +18,10 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate=useNavigate()
   const toast=useToast()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
@@ -33,10 +35,10 @@ const SignUp = () => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
   };
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async(e) => {
     e.preventDefault();
    
-    axios
+   await axios
       .post("http://localhost:4000/api/v1/register", signupData, {
         withCredentials: true,
       })
@@ -49,7 +51,9 @@ const SignUp = () => {
           duration: 3000,
           isClosable: true,
         })
-       
+       setTimeout(()=>{
+        navigate("/home")
+       },2000)
       })
       .catch((err) => {
         let message=err.response.data.message;
