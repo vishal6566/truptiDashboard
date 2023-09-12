@@ -67,6 +67,12 @@ const navigate=useNavigate();
               <p>Food Items</p>
             </div>
           </Link>
+          <Link to="/home/cart">
+            <div className="sidebarOption">
+              <BsFillCartFill size={20} />
+              <p>Cart</p>
+            </div>
+          </Link>
 
           <Link to="/home/orders">
             <div className="sidebarOption">
@@ -75,12 +81,7 @@ const navigate=useNavigate();
             </div>
           </Link>
 
-          <Link to="/home/cart">
-            <div className="sidebarOption">
-              <BsFillCartFill size={20} />
-              <p>Cart</p>
-            </div>
-          </Link>
+       
         </div>
         <div>
           <div className="sidebarFooterIcons">

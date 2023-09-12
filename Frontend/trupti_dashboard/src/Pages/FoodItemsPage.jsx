@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/fooditems.css";
 import axios from "axios";
-import {
-  Image,Stack,Heading,Text,Divider,Button,Card,CardBody,CardFooter,useToast} from "@chakra-ui/react";
 import {useSearchParams} from "react-router-dom"
 import {  getPageFromUrl } from "../utils/functionsAndimage";
 import {ArrowBackIcon,ArrowForwardIcon} from "@chakra-ui/icons"
+import FoodItemCard from "../Components/FoodItemsCard";
+import { useToast,Button } from "@chakra-ui/react";
 const FoodItemsPage = () => {
   const toast=useToast();
   const [cartItems,setCartItems]=useState([])
@@ -72,24 +72,7 @@ const handleAddToCart=(item)=>{
         {items &&
           items.products &&
           items.products.map((item) => (
-            <Card width="250px" key={item._id}>
-              <CardBody>
-                <Image src={item.img} borderRadius="sm" />
-                <Stack mt="2" spacing="1">
-                  <Heading size="sm">{item.name}</Heading>
-
-                  <Text color="blue.600" fontSize="md">
-                    ₹ {item.price}
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <Button onClick={()=>handleAddToCart(item)} variant="ghost" colorScheme="blue" w="100%">
-                  Add to cart
-                </Button>
-              </CardFooter>
-            </Card>
+            <FoodItemCard key={item._id} handleAddToCart={handleAddToCart} item={item} />
           ))}
       </div>
       <div className="pageNavigator">
