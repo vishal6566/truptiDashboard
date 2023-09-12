@@ -1,0 +1,17 @@
+.mainItemsContainer {
+  width: 100%;
+}
+
+.itemsTitle {
+  margin-top: 30px;
+  font-size: 36px;
+  line-height: 43px;
+  font-weight: 700;
+  color: #2f8e81;
+}
+.itemsContainer{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin-top: 30px;
+    gap: 10px;
+}

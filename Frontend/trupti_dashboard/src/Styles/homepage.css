@@ -6,11 +6,14 @@
 }
 .homeContainer > div:first-child {
     width: 16%;
-    
+    position: fixed;
+top: 0;
+left: 0;
+height: 100vh;
    
   }
   .homeContainer > div:last-child {
     width: 83%;
-  
-    height: 100vh;
+    margin-left: 250px;
+    
   }
