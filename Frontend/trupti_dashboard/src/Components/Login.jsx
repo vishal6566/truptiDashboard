@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/login.css";
-import { loginBannerImage, logo } from "../utils/image";
+import { loginBannerImage, logo } from "../utils/functionsAndimage";
 import { useNavigate } from 'react-router-dom';
 
 import {

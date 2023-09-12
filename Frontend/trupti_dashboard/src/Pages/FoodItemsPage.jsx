@@ -2,21 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../Styles/fooditems.css";
 import axios from "axios";
 import {
-  Image,
-  Stack,
-  Heading,
-  Text,
-  Divider,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-} from "@chakra-ui/react";
+  Image,Stack,Heading,Text,Divider,Button,Card,CardBody,CardFooter} from "@chakra-ui/react";
+import {useSearchParams} from "react-router-dom"
+import {  getPageFromUrl } from "../utils/functionsAndimage";
+import {ArrowBackIcon,ArrowForwardIcon} from "@chakra-ui/icons"
 const FoodItemsPage = () => {
   const [items, setItems] = useState([]);
+  const [searchParams,setSearchParams]=useSearchParams();
+  const initialPage=getPageFromUrl(searchParams.get("page"))
+  const [page, setPage] = useState(initialPage);
   const getAllItems = async () => {
     await axios
-      .get("http://localhost:4000/api/v1/allproducts", {
+      .get(`http://localhost:4000/api/v1/allproducts?page=${page}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -28,7 +25,9 @@ const FoodItemsPage = () => {
   };
   useEffect(() => {
     getAllItems();
-  }, []);
+    setSearchParams({ page });
+    window.scrollTo(0, 0);
+  }, [page]);
 
   return (
     <div className="mainItemsContainer">
@@ -57,6 +56,15 @@ const FoodItemsPage = () => {
             </Card>
           ))}
       </div>
+      <div className="pageNavigator">
+     <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
+       <ArrowBackIcon mr={5}/>   Previous
+      </Button>
+      <Button>{page}</Button>
+      <Button disabled={page >= 3} onClick={() => setPage(page + 1)}>
+       Next  <ArrowForwardIcon  ml={5} />
+      </Button>
+     </div>
     </div>
   );
 };
