@@ -45,7 +45,7 @@ const Login = () => {
         })
         setTimeout(()=>{
           navigate("/home")
-        },2000)
+        },1000)
       })
       .catch((err) => {
        let message=err.response.data.message;

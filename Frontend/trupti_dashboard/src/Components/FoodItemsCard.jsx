@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import {
   Image,
   Stack,
@@ -14,10 +14,24 @@ import {
 
 
 const FoodItemCard = ({ item, handleAddToCart }) => {
+  
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 800);
+    };
 
+    window.addEventListener("resize", handleResize);
 
+    
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
-    <Card width="250px">
+    <Card width={isSmallScreen ? "160px" : "250px"}>
       <CardBody>
         <Image src={item.img} borderRadius="sm" />
         <Stack mt="2" spacing="1">

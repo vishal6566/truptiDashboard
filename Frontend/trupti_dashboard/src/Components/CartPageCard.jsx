@@ -1,15 +1,15 @@
 import React from 'react'
 import {
-    Card,
-    CardBody,
-    CardFooter,
-    Image,
-    Stack,
-    Heading,
-    Button,
-    Text,
-  } from "@chakra-ui/react";
-const CartPageCard = ({item,handleDecrement,handleIncrement,handleRemoveItem}) => {
+  Card,
+  CardBody,
+  CardFooter,
+  Image,
+  Stack,
+  Heading,
+  Button,
+  Text,
+} from "@chakra-ui/react";
+const CartPageCard = ({item,handleDecrement,handleIncrement,handleRemoveItem,calculateItemPrice}) => {
   return (
     <div>
          <Card key={item._id}
@@ -27,7 +27,8 @@ const CartPageCard = ({item,handleDecrement,handleIncrement,handleRemoveItem}) =
            <Stack>
              <CardBody>
                <Heading size="md">{item.name}</Heading>
-               <Text mt="2"> ₹ {item.price}</Text>
+               <Text mt="2"> Item Price: ₹{item.price}</Text>
+               <Heading size="sm" mt="2">Total Price: ₹{calculateItemPrice(item)}</Heading >
              </CardBody>
 
              <CardFooter>

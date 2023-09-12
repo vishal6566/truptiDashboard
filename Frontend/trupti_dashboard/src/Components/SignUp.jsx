@@ -53,11 +53,11 @@ const SignUp = () => {
         })
        setTimeout(()=>{
         navigate("/home")
-       },2000)
+       },1000)
       })
       .catch((err) => {
         let message=err.response.data.message;
-        console.log(message)
+        
         console.log(signupData.email)
         if(message===`E11000 duplicate key error collection: trupti.users index: email_1 dup key: { email: "${signupData.email}" }`){
           message="Email is already registered."
