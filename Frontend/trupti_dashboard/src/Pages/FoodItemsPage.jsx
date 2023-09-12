@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import "../Styles/fooditems.css";
 import axios from "axios";
 import {
-  Image,Stack,Heading,Text,Divider,Button,Card,CardBody,CardFooter} from "@chakra-ui/react";
+  Image,Stack,Heading,Text,Divider,Button,Card,CardBody,CardFooter,useToast} from "@chakra-ui/react";
 import {useSearchParams} from "react-router-dom"
 import {  getPageFromUrl } from "../utils/functionsAndimage";
 import {ArrowBackIcon,ArrowForwardIcon} from "@chakra-ui/icons"
 const FoodItemsPage = () => {
+  const toast=useToast();
+  const [cartItems,setCartItems]=useState([])
   const [items, setItems] = useState([]);
   const [searchParams,setSearchParams]=useSearchParams();
   const initialPage=getPageFromUrl(searchParams.get("page"))
   const [page, setPage] = useState(initialPage);
+  
+  //get all items function
   const getAllItems = async () => {
     await axios
       .get(`http://localhost:4000/api/v1/allproducts?page=${page}`, {
@@ -23,10 +27,42 @@ const FoodItemsPage = () => {
         console.log(err);
       });
   };
+//add to cart function
+const handleAddToCart=(item)=>{
+  
+  const isItemPresent=cartItems.some((el)=>el._id===item._id);
+  if(!isItemPresent){
+    const updatedCart=[...cartItems,item];
+    setCartItems(updatedCart)
+    localStorage.setItem("cart",JSON.stringify(updatedCart))
+    toast({
+      title: `${item.name} is successfully added to cart.`,
+      
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    })
+  }
+  else{
+    toast({
+      title: `${item.name} is alerady present in your cart.`,
+      
+      status: 'error',
+      duration: 2000,
+      isClosable: true,
+    })
+  }
+}
+
   useEffect(() => {
     getAllItems();
     setSearchParams({ page });
     window.scrollTo(0, 0);
+    const savedCart = JSON.parse(localStorage.getItem("cart"));
+    if (savedCart) {
+      setCartItems(savedCart);
+    }
+   
   }, [page]);
 
   return (
@@ -49,7 +85,7 @@ const FoodItemsPage = () => {
               </CardBody>
               <Divider />
               <CardFooter>
-                <Button variant="ghost" colorScheme="blue" w="100%">
+                <Button onClick={()=>handleAddToCart(item)} variant="ghost" colorScheme="blue" w="100%">
                   Add to cart
                 </Button>
               </CardFooter>
