@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/fooditems.css";
 import axios from "axios";
-import {useSearchParams} from "react-router-dom"
-import {  getPageFromUrl } from "../utils/functionsAndimage";
+import { useSearchParams } from "react-router-dom";
+import { getPageFromUrl } from "../utils/functionsAndimage";
 import EmptyContainer from "../Components/EmptyContainer";
 import FoodItemCard from "../Components/FoodItemsCard";
 import { useToast } from "@chakra-ui/react";
 import PageNavigator from "../Components/PageNavigator";
 const FoodItemsPage = () => {
-  const toast=useToast();
-  const [cartItems,setCartItems]=useState([])
+  const toast = useToast();
+  const [cartItems, setCartItems] = useState([]);
   const [items, setItems] = useState([]);
-  const [searchParams,setSearchParams]=useSearchParams();
-  const initialPage=getPageFromUrl(searchParams.get("page"))
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = getPageFromUrl(searchParams.get("page"));
   const [page, setPage] = useState(initialPage);
-  
+
   //get all items function
   const getAllItems = async () => {
     await axios
@@ -22,38 +22,38 @@ const FoodItemsPage = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setItems(res.data);
+        let data = res.data.products;
+        setItems(data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-//add to cart function
-const handleAddToCart=(item)=>{
-  
-  const isItemPresent=cartItems.some((el)=>el._id===item._id);
-  if(!isItemPresent){
-    const updatedCart=[...cartItems,item];
-    setCartItems(updatedCart)
-    localStorage.setItem("cart",JSON.stringify(updatedCart))
-    toast({
-      title: `${item.name} is successfully added to cart.`,
-      
-      status: 'success',
-      duration: 2000,
-      isClosable: true,
-    })
-  }
-  else{
-    toast({
-      title: `${item.name} is alerady present in your cart.`,
-      
-      status: 'error',
-      duration: 2000,
-      isClosable: true,
-    })
-  }
-}
+  console.log(items.length);
+  //add to cart function
+  const handleAddToCart = (item) => {
+    const isItemPresent = cartItems.some((el) => el._id === item._id);
+    if (!isItemPresent) {
+      const updatedCart = [...cartItems, item];
+      setCartItems(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      toast({
+        title: `${item.name} is successfully added to cart.`,
+
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: `${item.name} is alerady present in your cart.`,
+
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
 
   useEffect(() => {
     getAllItems();
@@ -63,19 +63,27 @@ const handleAddToCart=(item)=>{
     if (savedCart) {
       setCartItems(savedCart);
     }
-   
   }, [page]);
-let itemlength=items.products.length
+  console.log(items);
   return (
     <div className="mainItemsContainer">
-    
       <div className="itemsTitle">Food Items</div>
       <div className="itemsContainer">
-        {itemlength===0?<EmptyContainer title="NO MORE FOOD ITEMS TO SHOW" info="Please go to previous page." />:items &&
-          items.products &&
-          items.products.map((item) => (
-            <FoodItemCard key={item._id} handleAddToCart={handleAddToCart} item={item} />
-          ))}
+        {items.length === 0 ? (
+          <EmptyContainer
+            title="NO MORE FOOD ITEMS TO SHOW"
+            info="Please go to previous page."
+          />
+        ) : (
+          items &&
+          items.map((item) => (
+            <FoodItemCard
+              key={item._id}
+              handleAddToCart={handleAddToCart}
+              item={item}
+            />
+          ))
+        )}
       </div>
       <PageNavigator page={page} setPage={setPage} />
     </div>

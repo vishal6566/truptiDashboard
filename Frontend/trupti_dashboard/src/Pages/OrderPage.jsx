@@ -18,16 +18,19 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams,useNavigate } from "react-router-dom";
 import { getPageFromUrl } from "../utils/functionsAndimage";
 
 import PageNavigator from "../Components/PageNavigator";
 import EmptyContainer from "../Components/EmptyContainer";
 const OrderPage = () => {
+  const navigate=useNavigate()
+  const [err, setErr] = useState(false);
   const [orderItems, setOrderItems] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = getPageFromUrl(searchParams.get("page"));
   const [page, setPage] = useState(initialPage);
+  
   const handleGetOrders = async () => {
     try {
       const res = await axios.get(
@@ -36,9 +39,11 @@ const OrderPage = () => {
           withCredentials: true,
         }
       );
-      
-      setOrderItems( res.data.orders);
+
+      setOrderItems(res.data.orders);
+      setErr(false);
     } catch (err) {
+      setErr(true);
       console.log(err);
     }
   };
@@ -48,14 +53,16 @@ const OrderPage = () => {
     setSearchParams({ page });
     window.scrollTo(0, 0);
   }, [page]);
-  console.log(orderItems);
+  const getSingleOrderId=(id)=>{
+navigate(`${id}`)
+  }
   return (
-    <div className="orderContainer">
+    <div>
       <div className="orderTitleContainer">
         <Heading className="orderTitle">Orders</Heading>
         <div>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton className="filterBtn" as={Button} rightIcon={<ChevronDownIcon />}>
               Filter:
             </MenuButton>
             <MenuList>
@@ -65,24 +72,28 @@ const OrderPage = () => {
           </Menu>
         </div>
       </div>
-      <div className="orderListContainer">
-        <TableContainer>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Date</Th>
-                <Th>Amount</Th>
-                <Th>Shipped</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {orderItems.length===0?<EmptyContainer title="NO MORE ORDER TO SHOW." info="Please go to previous page." />:orderItems &&
-                orderItems.map((order) => (
-                  <Tr
+      <div>
+      <TableContainer>
+  <Table variant='simple'>
+   
+    <Thead>
+      <Tr>
+        <Th>Name</Th>
+        <Th>Date</Th>
+        <Th>Amount</Th>
+        <Th>Shipped</Th>
+      </Tr>
+    </Thead>
+    <Tbody>
+    {orderItems.length===0?<EmptyContainer title={err?"PLEASE SIGNIN!" :"NO ORDERS"}
+            info={err?"Navigate to Signin page by clicking on logout button":"No more orders to show"} />: 
+            orderItems &&orderItems.map((order) => (
+             
+               <Tr onClick={()=>getSingleOrderId(order._id)}
+               key={order._id} 
                     className="orderBlock"
                     style={{ backgroundColor: order.shipped ? "#edf2f7" : "" }}
-                    key={order._id}
+                    
                   >
                     <Td>{order.user.name}</Td>
 
@@ -96,14 +107,17 @@ const OrderPage = () => {
                       )}
                     </Td>
                   </Tr>
+                  
                 ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+     
+    </Tbody>
+    
+  </Table>
+</TableContainer>
       </div>
-    <PageNavigator page={page} setPage={setPage} />
+      <div>  {err?"": <PageNavigator page={page} setPage={setPage} />}</div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderPage;
+export default OrderPage

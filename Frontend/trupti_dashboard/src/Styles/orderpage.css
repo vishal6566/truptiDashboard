@@ -1,6 +1,3 @@
-.orderContainer {
-  width: 100%;
-}
 .orderTitleContainer {
   display: flex;
   justify-content: space-between;
@@ -13,18 +10,14 @@
   font-weight: 700;
   color: #2f8e81;
   margin-top: 30px;
-  
 }
-.orderTitleContainer>div{
-    margin-top: 30px;
+.orderTitle {
+  font-size: 36px;
+  line-height: 43px;
+  font-weight: 700;
+  color: #2f8e81;
+  margin-top: 30px;
 }
-.orderBlock{
-    cursor: pointer;
+.filterBtn{
+  margin-top: 20px;
 }
-.pageNavigator{
-
-    display: flex;
-    justify-content: center;
-    gap:8px;
-    margin: 20px 0px;
-  }

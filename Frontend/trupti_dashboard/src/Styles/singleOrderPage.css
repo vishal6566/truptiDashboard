@@ -1,0 +1,99 @@
+.singleOrderPageHeaderContainer{
+    width: 100%;
+   border-bottom: 1px solid #e4e8ed;
+}
+.backOption{
+   
+    margin-top: 20px;
+    color: #394353;
+    font-weight: 500;
+}
+.headerContainer{
+
+   padding: 20px 0px;
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+}
+
+
+.userInfoContainer{
+  
+    width: 58%;
+}
+.userInfoContainer>div:first-child{
+ 
+    font-size: 30px;
+    line-height: 43px;
+    font-weight: 700;
+    color: #2f8e81;
+}
+.userInfoContainer>div:last-child{
+    display: flex;
+    margin-top: 10px;
+}
+.userInfoContainer>div:last-child>p:first-child{
+    font-weight: bold;
+    font-size: 20px;
+}
+.userInfoContainer>div:last-child>p:last-child{
+    font-size: 20px;
+}
+
+.shippingInfoContainer{
+
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+}
+.shippingInfoContainer>div{
+border-radius: 5px;
+    width: 48%;
+    height: fit-content;
+    background-color: #e2e8f0;
+    text-align: center;
+    margin: 20px 0px;
+    padding: 10px 10px;
+    }
+    .shippingInfoContainer>div>p:first-child{
+        font-weight: bold;
+        font-size: 16px;
+    }
+    .shippingInfoContainer>div>p:last-child{
+        font-size: 14px;
+        color: #b59ea4;
+    }
+    .orderListContainer{
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+    }
+    .orderCard{
+        width: 80%;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+       position: relative;
+    }
+    .itemName{
+font-weight: 600;
+font-size: 18px;
+    }
+    .itemPrice{
+        font-size: 16px;
+        color: #707988;
+        margin-top: 4px;
+       padding-bottom: 8px;
+    }
+    .itemQuantity{
+border-radius: 5px;
+width: fit-content;
+padding: 4px 8px;
+background-color: #4a5568;
+color: white;
+font-weight: bold;
+position: absolute;
+top: 0;
+right: 0;
+font-size: 18px;
+    }
+    

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Styles/login.css";
 import { loginBannerImage, logo } from "../utils/functionsAndimage";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   FormControl,
@@ -96,7 +96,9 @@ const Login = () => {
                 <Button colorScheme="blue" mt={5} w="100%" type="submit">
                   Sign In
                 </Button>
-            
+                <Link to="/home"><Button colorScheme="blue" mt={5} w="100%" >
+             Temp Sign In
+                </Button>   </Link>
               </FormControl>
             </form>
             <Box className="newUserBox">

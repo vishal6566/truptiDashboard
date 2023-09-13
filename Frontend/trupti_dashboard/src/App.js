@@ -8,6 +8,7 @@ import Dashboard from './Pages/Dashboard';
 import CartPage from './Pages/CartPage';
 import OrderPage from './Pages/OrderPage';
 import FoodItemsPage from './Pages/FoodItemsPage';
+import SingleOrderPage from './Pages/SingleOrderPage';
 function App() {
   return (
     <ChakraProvider>
@@ -18,9 +19,10 @@ function App() {
           <Route path="cart" element={<CartPage />} />
           <Route path="orders" element={<OrderPage />} />
           <Route path="items" element={<FoodItemsPage />} />
-          
+          <Route path="orders/:id" element={<SingleOrderPage />}></Route>
         </Route>
       </Routes>
+     
   </ChakraProvider>
   );
 }
