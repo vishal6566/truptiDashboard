@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import "../Styles/sideNavbar.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate  } from "react-router-dom";
 import { BiHomeAlt, BiSolidExit } from "react-icons/bi";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { MdNightlightRound } from "react-icons/md";
 import { BsFillSunFill, BsFillCartFill } from "react-icons/bs";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+
 import {
  
   useToast
 } from "@chakra-ui/react";
+
 const SideNavbar = () => {
   const [day, setDay] = useState(true);
 const toast=useToast();
@@ -47,6 +48,7 @@ const navigate=useNavigate();
         })
       });
   };
+ 
   return (
     <div className="navbarContainer">
       <div>

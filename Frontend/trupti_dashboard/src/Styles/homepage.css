@@ -1,19 +1,39 @@
-.homeContainer{
-    width: 100%;
+.homeContainer {
+  width: 100%;
 
-    display: flex;
-    gap: 1%;
+  display: flex;
+  gap: 1%;
 }
-.homeContainer > div:first-child {
-    width: 16%;
-    position: fixed;
-top: 0;
-left: 0;
-height: 100vh;
-   
+.sideNavbar{
+  width: 16%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+.topNavbar{
+  display: none;
+}
+.homeContainer > div:last-child {
+  width: 83%;
+  margin-left: 250px;
+}
+
+@media(max-width:1000px){
+  .homeContainer {
+    width: 100%;
+  display: flex;
+    gap: 1%;
+    flex-direction: column;
+  }
+  .topNavbar{
+    display: block;
+  }
+  .sideNavbar{
+display: none;
   }
   .homeContainer > div:last-child {
-    width: 83%;
-    margin-left: 250px;
-    
+    width: 98%;
+    margin-left: 0px;
   }
+}

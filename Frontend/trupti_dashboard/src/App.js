@@ -2,7 +2,6 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import LandingPage from './Pages/LandingPage';
-import SideNavbar from './Pages/SideNavbar';
 import { Routes, Route } from "react-router-dom";
 import HomePage from './Pages/HomePage';
 import Dashboard from './Pages/Dashboard';
