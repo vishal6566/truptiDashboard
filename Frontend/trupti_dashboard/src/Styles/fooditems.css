@@ -29,13 +29,7 @@
     margin-top: 30px;
     gap: 10px;
 }
-.pageNavigator{
 
-  display: flex;
-  justify-content: center;
-  gap:8px;
-  margin: 20px 0px;
-}
 }
 
 @media(max-width:550px){
@@ -44,5 +38,9 @@
     grid-template-columns: repeat(2,1fr);
     margin-top: 30px;
     gap: 10px;
+}
+.itemsTitle {
+  margin-top: 5px;
+  
 }
 }

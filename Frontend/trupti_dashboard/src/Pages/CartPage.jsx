@@ -9,7 +9,8 @@ import {
 } from "@chakra-ui/react";
 import CartPageCard from "../Components/CartPageCard";
 import axios from "axios";
-import EmptyCartItem from "../Components/EmptyCartItem";
+
+import EmptyContainer from "../Components/EmptyContainer";
 const CartPage = () => {
   const toast = useToast();
   const getInitialCart = () => {
@@ -147,8 +148,8 @@ const CartPage = () => {
       <div className="cartItemsList">
         <div className="cartTitle">Cart Items: ₹{calculateTotalAmount()}</div>
         <div className="cartListContainer">
-        {/* {}  <EmptyCartItem /> */}
-        {cart.length===0?<EmptyCartItem /> :cart.map((item) => (
+     
+        {cart.length===0?<EmptyContainer title="YOUR CART IS EMPTY! " info="Please go to Food Items section and add Food Items to cart." /> :cart.map((item) => (
             <CartPageCard
               key={item._id}
               item={item}
@@ -158,7 +159,7 @@ const CartPage = () => {
               calculateItemPrice={calculateItemPrice}
             />
           ))}
-          {/* {} */}
+    
         </div>
       </div>
       <div className="shippingContainer">

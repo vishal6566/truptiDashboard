@@ -22,7 +22,10 @@ exports.createOrder = catchAsyncHandler(async (req, res, next) => {
 //get all orders
 
 exports.getAllOrders = catchAsyncHandler(async (req, res, next) => {
-  const orders = await Order.find().populate("user", "name");
+  const page=parseInt(req.query.page) || 1;
+  const limit=10;
+  const skip=(page-1)*limit;
+  const orders = await Order.find().populate("user", "name").skip(skip).limit(limit).sort({ createdAt: -1 });
 
   let totalAmount = 0;
   orders.forEach((order) => {

@@ -1,0 +1,30 @@
+.orderContainer {
+  width: 100%;
+}
+.orderTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 10px;
+}
+.orderTitle {
+  font-size: 36px;
+  line-height: 43px;
+  font-weight: 700;
+  color: #2f8e81;
+  margin-top: 30px;
+  
+}
+.orderTitleContainer>div{
+    margin-top: 30px;
+}
+.orderBlock{
+    cursor: pointer;
+}
+.pageNavigator{
+
+    display: flex;
+    justify-content: center;
+    gap:8px;
+    margin: 20px 0px;
+  }

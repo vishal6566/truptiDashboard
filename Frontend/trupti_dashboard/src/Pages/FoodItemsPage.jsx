@@ -3,9 +3,10 @@ import "../Styles/fooditems.css";
 import axios from "axios";
 import {useSearchParams} from "react-router-dom"
 import {  getPageFromUrl } from "../utils/functionsAndimage";
-import {ArrowBackIcon,ArrowForwardIcon} from "@chakra-ui/icons"
+import EmptyContainer from "../Components/EmptyContainer";
 import FoodItemCard from "../Components/FoodItemsCard";
-import { useToast,Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+import PageNavigator from "../Components/PageNavigator";
 const FoodItemsPage = () => {
   const toast=useToast();
   const [cartItems,setCartItems]=useState([])
@@ -64,26 +65,19 @@ const handleAddToCart=(item)=>{
     }
    
   }, [page]);
-
+let itemlength=items.products.length
   return (
     <div className="mainItemsContainer">
+    
       <div className="itemsTitle">Food Items</div>
       <div className="itemsContainer">
-        {items &&
+        {itemlength===0?<EmptyContainer title="NO MORE FOOD ITEMS TO SHOW" info="Please go to previous page." />:items &&
           items.products &&
           items.products.map((item) => (
             <FoodItemCard key={item._id} handleAddToCart={handleAddToCart} item={item} />
           ))}
       </div>
-      <div className="pageNavigator">
-     <Button disabled={page === 1} onClick={() => setPage(page - 1)}>
-       <ArrowBackIcon mr={5}/>   Previous
-      </Button>
-      <Button>{page}</Button>
-      <Button disabled={page >= 3} onClick={() => setPage(page + 1)}>
-       Next  <ArrowForwardIcon  ml={5} />
-      </Button>
-     </div>
+      <PageNavigator page={page} setPage={setPage} />
     </div>
   );
 };
