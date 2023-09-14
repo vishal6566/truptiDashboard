@@ -43,6 +43,7 @@
 }
 .trackContainer>div:nth-child(2)>div:hover{
     transform: translateY(2px);
+    cursor: pointer;
 }
 .trackContainer>div:nth-child(2)>div:first-child{
     background-color: #2d3748;

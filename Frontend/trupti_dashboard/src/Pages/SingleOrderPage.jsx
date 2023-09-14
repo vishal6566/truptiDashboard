@@ -14,7 +14,7 @@ const SingleOrderPage = () => {
   const {colorMode}=useColorMode()
   const {id}=useParams();
   const [order,setOrder]=useState({})
-  const [shipped,setShipped]=useState(false)
+  
   const getOrderData=async()=>{
     try{
       let res=await axios.get(`http://localhost:4000/api/v1/order/${id}`,{withCredentials:true})
@@ -28,7 +28,8 @@ const updateOrderStatus=async()=>{
   const id=order._id;
   try{
     const res=await axios.put(`http://localhost:4000/api/v1/order/${id}/shipped`,{withCredentials:true});
-    setShipped(res.data.order.shipped)
+    
+    setOrder({ ...order, shipped: res.data.order.shipped});
     toast({
       title: `Hurray! Order Is Shipped.`,
 
@@ -55,6 +56,7 @@ description:"Order Is Not Shipped.",
   const containerStyle = {
     backgroundColor: colorMode === 'light' ? ' #e2e8f0' : '#2d3748',
    };
+   
   return (
     <div>
       <div className='singleOrderPageHeaderContainer'>
@@ -95,7 +97,7 @@ description:"Order Is Not Shipped.",
       ))}
       </div>
 
-      {shipped ?<TrackShipmentContainer />: <ShipContainer updateOrder={updateOrderStatus} /> }
+      {order.shipped && order.shipped ?<TrackShipmentContainer />: <ShipContainer updateOrder={updateOrderStatus} /> }
     </div>
   )
 }
