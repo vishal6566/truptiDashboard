@@ -36,33 +36,20 @@ const TopNavbar = () => {
   const handleDayAndNight = () => {
     toggleColorMode();
   };
-  const handleLogout = async () => {
-    await axios
-      .get("http://localhost:4000/api/v1/logout", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        let message = res.data.message;
+  const handleLogout =  () => {
+    localStorage.removeItem('USER-TOKEN')
         toast({
-          title: message,
-          description: "You will be redirected to Signin page",
-          status: "success",
+          title:"Logout Successfully",
+          description:"You will be redirected to Signin page" ,
+          status: 'success',
           duration: 3000,
           isClosable: true,
-        });
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      })
-      .catch((err) => {
-        toast({
-          title: "Logout Failed",
-          description: "Some error occurred while logging out.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      });
+        })
+        setTimeout(()=>{
+          navigate("/")
+        },1000)
+      
+     
   };
   return (
     <div className="topNavbarContainer">

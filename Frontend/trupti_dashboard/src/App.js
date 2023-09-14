@@ -1,6 +1,7 @@
 
 import './App.css';
-import { ChakraProvider,CSSReset,ColorModeProvider } from '@chakra-ui/react';
+
+import { ChakraProvider } from '@chakra-ui/react';
 import { combinedTheme } from './utils/DayAndNightTheme';
 import LandingPage from './Pages/LandingPage';
 import { Routes, Route } from "react-router-dom";
@@ -10,7 +11,9 @@ import CartPage from './Pages/CartPage';
 import OrderPage from './Pages/OrderPage';
 import FoodItemsPage from './Pages/FoodItemsPage';
 import SingleOrderPage from './Pages/SingleOrderPage';
+
 function App() {
+  
   return (
     <ChakraProvider theme={combinedTheme}>
 <Routes>

@@ -19,7 +19,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+import { API } from "../utils/functionsAndimage";
 const SignUp = () => {
   const navigate=useNavigate()
   const toast=useToast()
@@ -35,15 +35,17 @@ const SignUp = () => {
     const { name, value } = e.target;
     setSignupData({ ...signupData, [name]: value });
   };
+  const headers = {
+    'Content-Type': 'application/json',
+  }
   const handleSignupSubmit = async(e) => {
     e.preventDefault();
    
    await axios
-      .post("http://localhost:4000/api/v1/register", signupData, {
-        withCredentials: true,
-      })
+      .post(`${API}/api/v1/register`, signupData,{
+        headers: headers})
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem("USER-TOKEN",res.data.token)
         toast({
           title: 'SignUp Successfully',
           description: "You will be redireted to dashboard page.",

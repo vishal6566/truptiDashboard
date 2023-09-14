@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import CartPageCard from "../Components/CartPageCard";
 import axios from "axios";
-
+import { API } from "../utils/functionsAndimage";
 import EmptyContainer from "../Components/EmptyContainer";
 const CartPage = () => {
   const toast = useToast();
@@ -99,7 +99,10 @@ const CartPage = () => {
     }, 0);
   };
   //Function for place order
-  
+  const headers={
+    'Content-Type': 'application/json',
+    'authorization': `Bearer ${localStorage.getItem("USER-TOKEN")}`, 
+  }
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -110,9 +113,9 @@ const CartPage = () => {
         totalPrice: calculateTotalAmount(),
       };
       const res = await axios.post(
-        "http://localhost:4000/api/v1/order/new",
+        `${API}/api/v1/order/new`,
         orderData,
-        { withCredentials: true }
+        { headers:headers}
       );
       if (res.status === 201) {
         toast({

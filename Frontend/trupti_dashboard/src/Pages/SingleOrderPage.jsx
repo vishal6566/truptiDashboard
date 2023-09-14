@@ -9,25 +9,34 @@ import { useColorMode } from '@chakra-ui/react';
 import ShipContainer from '../Components/ShipContainer';
 import TrackShipmentContainer from '../Components/TrackShipmentContainer';
 import { useToast } from "@chakra-ui/react";
+import LoadingComponent from "../Components/LoadingComponent";
+import { API } from '../utils/functionsAndimage';
 const SingleOrderPage = () => {
   const toast=useToast()
   const {colorMode}=useColorMode()
   const {id}=useParams();
   const [order,setOrder]=useState({})
-  
+  const [loading,setLoading]=useState(true)
+  const headers={
+    'Content-Type': 'application/json',
+    'authorization': `Bearer ${localStorage.getItem("USER-TOKEN")}`, 
+  }
   const getOrderData=async()=>{
+    setLoading(true)
     try{
-      let res=await axios.get(`http://localhost:4000/api/v1/order/${id}`,{withCredentials:true})
+      let res=await axios.get(`${API}/api/v1/order/${id}`,{headers:headers})
       
       setOrder(res.data.order)
     }catch(err){
       console.log(err)
+    }finally{
+      setLoading(false)
     }
   }
 const updateOrderStatus=async()=>{
   const id=order._id;
   try{
-    const res=await axios.put(`http://localhost:4000/api/v1/order/${id}/shipped`,{withCredentials:true});
+    const res=await axios.put(`${API}/api/v1/order/${id}/shipped`,{withCredentials:true});
     
     setOrder({ ...order, shipped: res.data.order.shipped});
     toast({
@@ -68,7 +77,7 @@ description:"Order Is Not Shipped.",
           <Heading className='nameBlock'>{order.user&&order.user.name}</Heading>
          </div>
          <div >
-          <p>order total:</p>
+          <p>Order Total:</p>
           <p>₹{order.totalPrice&&order.totalPrice}</p>
           </div>
        </div>
@@ -86,7 +95,7 @@ description:"Order Is Not Shipped.",
       </div>
       
       
-      <div className='orderListContainer'>
+   {loading?<LoadingComponent />:<div className='orderListContainer'>
       {order.orderItems && order.orderItems.map((order)=>(
           <div className='orderCard' key={order._id}>
           <img src={order.img} alt="" />
@@ -95,7 +104,8 @@ description:"Order Is Not Shipped.",
         <div className='itemQuantity'>{order.quantity}</div>
         </div>
       ))}
-      </div>
+      </div>}  
+    
 
       {order.shipped && order.shipped ?<TrackShipmentContainer />: <ShipContainer updateOrder={updateOrderStatus} /> }
     </div>

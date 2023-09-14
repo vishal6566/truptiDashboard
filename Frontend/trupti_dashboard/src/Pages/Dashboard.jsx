@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import "../Styles/dashboard.css";
 import { Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { API } from "../utils/functionsAndimage";
 import axios from "axios";
 const Dashboard = () => {
   const [orders, setOrders] = useState({});
 
+  const headers={
+    'Content-Type': 'application/json',
+    'authorization': `Bearer ${localStorage.getItem("USER-TOKEN")}`, 
+  }
   const handleGetOrders = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/api/v1/order/all`, {
-        withCredentials: true,
+      const res = await axios.get(`${API}/api/v1/order/all`, {
+        headers:headers
       });
 
       setOrders(res.data);

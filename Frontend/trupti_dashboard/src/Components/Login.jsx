@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../Styles/login.css";
 import { loginBannerImage, logo } from "../utils/functionsAndimage";
 import { Link, useNavigate } from 'react-router-dom';
-
+import { API } from "../utils/functionsAndimage";
 import {
   FormControl,
   Button,
@@ -27,15 +27,17 @@ const Login = () => {
     setLoginData({ ...loginData, [name]: value });
   };
 
+  const headers = {
+    'Content-Type': 'application/json',
+  }
   const handleLoginSubmit =async (e) => {
     e.preventDefault();
    
    await axios
-      .post("http://localhost:4000/api/v1/login", loginData, {
-        withCredentials: true,
-      })
+      .post(`${API}/api/v1/login`, loginData,{
+        headers: headers} )
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem("USER-TOKEN",res.data.token)
         toast({
           title: 'SignIn Successfully',
           description: "You will be redireted to dashboard page.",

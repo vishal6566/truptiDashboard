@@ -12,4 +12,6 @@ return value;
 }
 
 
+export const API="https://truptibackend.onrender.com"
+
 

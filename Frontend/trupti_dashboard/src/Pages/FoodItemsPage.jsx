@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "../Styles/fooditems.css";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { getPageFromUrl } from "../utils/functionsAndimage";
+import { API, getPageFromUrl } from "../utils/functionsAndimage";
 import EmptyContainer from "../Components/EmptyContainer";
 import FoodItemCard from "../Components/FoodItemsCard";
 import { useToast } from "@chakra-ui/react";
 import PageNavigator from "../Components/PageNavigator";
+import LoadingComponent from "../Components/LoadingComponent";
 const FoodItemsPage = () => {
   const toast = useToast();
   const [cartItems, setCartItems] = useState([]);
@@ -14,22 +15,21 @@ const FoodItemsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = getPageFromUrl(searchParams.get("page"));
   const [page, setPage] = useState(initialPage);
-
+const [loading,setLoading]=useState(true);
   //get all items function
   const getAllItems = async () => {
-    await axios
-      .get(`http://localhost:4000/api/v1/allproducts?page=${page}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        let data = res.data.products;
-        setItems(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setLoading(true); 
+  try {
+    const res = await axios.get(`${API}/api/v1/allproducts?page=${page}`);
+    let data = res.data.products;
+    setItems(data);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false); 
+  }
   };
-  console.log(items.length);
+ 
   //add to cart function
   const handleAddToCart = (item) => {
     const isItemPresent = cartItems.some((el) => el._id === item._id);
@@ -54,7 +54,7 @@ const FoodItemsPage = () => {
       });
     }
   };
-
+  const hasMoreData = items.length > 0;
   useEffect(() => {
     getAllItems();
     setSearchParams({ page });
@@ -64,11 +64,12 @@ const FoodItemsPage = () => {
       setCartItems(savedCart);
     }
   }, [page]);
-  console.log(items);
+
   return (
     <div className="mainItemsContainer">
       <div className="itemsTitle">Food Items</div>
-      <div className="itemsContainer">
+    
+      {loading?<LoadingComponent />: <div className="itemsContainer">
         {items.length === 0 ? (
           <EmptyContainer
             title="NO MORE FOOD ITEMS TO SHOW"
@@ -84,8 +85,9 @@ const FoodItemsPage = () => {
             />
           ))
         )}
-      </div>
-      <PageNavigator page={page} setPage={setPage} />
+      </div>} 
+     
+      <PageNavigator page={page} setPage={setPage} hasMoreData={hasMoreData} />
     </div>
   );
 };

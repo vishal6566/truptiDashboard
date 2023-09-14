@@ -18,15 +18,10 @@ const navigate=useNavigate();
   const handleDayAndNight = () => {
    toggleColorMode();
   };
-  const handleLogout = async () => {
-    await axios
-      .get("http://localhost:4000/api/v1/logout", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        let message=res.data.message;
+  const handleLogout =  () => {
+    localStorage.removeItem('USER-TOKEN')
         toast({
-          title:message,
+          title:'Logout Successfully',
           description:"You will be redirected to Signin page" ,
           status: 'success',
           duration: 3000,
@@ -35,16 +30,8 @@ const navigate=useNavigate();
         setTimeout(()=>{
           navigate("/")
         },1000)
-      })
-      .catch((err) => {
-        toast({
-          title: 'Logout Failed',
-          description: "Some error occurred while logging out.",
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        })
-      });
+      
+     
   };
   const containerStyle = {
     backgroundColor: colorMode === 'light' ? 'white' : 'black',
