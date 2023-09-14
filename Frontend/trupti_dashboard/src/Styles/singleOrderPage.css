@@ -106,18 +106,25 @@
   right: 0;
   font-size: 18px;
 }
-@media (max-width: 400px) {
-  .orderListContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .orderListContainer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
+    .orderCard img {
+       
+        height: 200px;
+      
+      }
   }
+@media (max-width: 710px) {
+  .orderListContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
   @media(max-width:750px){
     .headerContainer {
         padding: 20px 0px;

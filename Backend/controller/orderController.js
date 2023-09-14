@@ -25,6 +25,8 @@ exports.getAllOrders = catchAsyncHandler(async (req, res, next) => {
   const page=parseInt(req.query.page) || 1;
   const limit=10;
   const skip=(page-1)*limit;
+  const totalOrdersCount = await Order.countDocuments();
+  const unshippedOrdersCount = await Order.countDocuments({ shipped: false });
   const orders = await Order.find().populate("user", "name").skip(skip).limit(limit).sort({ createdAt: -1 });
 
   let totalAmount = 0;
@@ -34,7 +36,9 @@ exports.getAllOrders = catchAsyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     totalAmount,
-    orders,
+    totalOrdersCount,
+    unshippedOrdersCount,
+    orders
   });
 });
 

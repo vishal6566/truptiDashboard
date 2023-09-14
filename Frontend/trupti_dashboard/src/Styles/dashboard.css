@@ -1,0 +1,75 @@
+.dashboardContainer {
+  width: 100%;
+  margin-top: 20px;
+}
+.bannerContainer {
+  background-image: url("https://images.unsplash.com/photo-1543773495-2cd9248a5bda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80");
+  height: 40vh;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bannerContainer > div {
+ 
+  margin-top: 15px;
+  display: flex;
+  gap: 20px;
+}
+.linkBtn{
+    background-color: #4299E1;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.linkBtn:hover{
+    cursor: pointer;
+}
+
+.overviewBlock {
+  height: 50vh;
+}
+.overviewBlock > div:last-child {
+  display: flex;
+  justify-content: space-between;
+}
+.overviewBlock > div:last-child > div {
+  border: 1px solid #b5b6b8;
+  width: 30%;
+  border-radius: 10px;
+  padding: 20px 0px;
+}
+.overviewBlock > div:first-child {
+  margin-top: 20px;
+  font-size: 36px;
+  font-weight: 700;
+  padding: 40px 0px;
+  text-align: center;
+}
+.overviewBlock > div:last-child >div> p:first-child {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 20px;
+  
+}
+.overviewBlock > div:last-child >div> p:last-child {
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+
+@media(max-width:800px){
+    .overviewBlock > div:last-child {
+        display: flex;
+       gap: 10px;
+        flex-direction: column;
+        
+      }
+      .overviewBlock > div:last-child > div{
+        width:90%;
+        margin: auto;
+      }
+}
