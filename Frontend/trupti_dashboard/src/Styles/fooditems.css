@@ -14,6 +14,7 @@
     grid-template-columns: repeat(4,1fr);
     margin-top: 30px;
     gap: 10px;
+    
 }
 .pageNavigator{
 

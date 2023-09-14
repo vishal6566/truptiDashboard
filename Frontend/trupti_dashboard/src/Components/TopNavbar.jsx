@@ -3,7 +3,7 @@ import "../Styles/topnavbar.css"
 import {
   Drawer,
   DrawerBody,
-
+  useColorMode,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -25,13 +25,16 @@ import { BsFillSunFill, BsFillCartFill } from "react-icons/bs";
 import axios from "axios";
 
 const TopNavbar = () => {
+  const {toggleColorMode,colorMode}=useColorMode();
   const toast = useToast();
   const navigate = useNavigate();
-  const [day, setDay] = useState(true);
+  const containerStyle = {
+    backgroundColor: colorMode === 'light' ? 'white' : 'black',
+   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
   const handleDayAndNight = () => {
-    setDay(!day);
+    toggleColorMode();
   };
   const handleLogout = async () => {
     await axios
@@ -65,9 +68,9 @@ const TopNavbar = () => {
     <div className="topNavbarContainer">
   <div>
       <Button
-        bg="white"
+        bg={colorMode==='light'?"#edf2f7":"#1a202c"}
         variant="outline"
-        borderColor="#edf2f7"
+        borderColor={colorMode==='light'?"#edf2f7":"white"}
         borderWidth="1px"
         onClick={onOpen}
       >
@@ -121,13 +124,14 @@ const TopNavbar = () => {
                     {" "}
                     <BiSolidExit size={20} color="white" onClick={onClose} />
                   </div>
-                  <div onClick={handleDayAndNight}>
-                    {day ? (
-                      <BsFillSunFill size={20} />
-                    ) : (
-                      <MdNightlightRound size={20} />
-                    )}
-                  </div>
+                  <div onClick={handleDayAndNight}  style={containerStyle}>
+              {colorMode ==="light" ? (
+                
+                <MdNightlightRound size={20} />
+              ) : (
+                <BsFillSunFill size={20} style={{ backgroundColor: 'black'}} />
+              )}
+            </div>
                 </div>
                 <div className="footer">
                   <p>© 2023 Topbar</p>

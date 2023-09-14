@@ -8,17 +8,15 @@ import { MdNightlightRound } from "react-icons/md";
 import { BsFillSunFill, BsFillCartFill } from "react-icons/bs";
 import axios from "axios";
 
-import {
- 
-  useToast
-} from "@chakra-ui/react";
+import { useToast,useColorMode,Heading} from "@chakra-ui/react";
 
 const SideNavbar = () => {
-  const [day, setDay] = useState(true);
+ 
+  const {toggleColorMode,colorMode}=useColorMode();
 const toast=useToast();
 const navigate=useNavigate();
   const handleDayAndNight = () => {
-    setDay(!day);
+   toggleColorMode();
   };
   const handleLogout = async () => {
     await axios
@@ -48,13 +46,15 @@ const navigate=useNavigate();
         })
       });
   };
- 
+  const containerStyle = {
+    backgroundColor: colorMode === 'light' ? 'white' : 'black',
+   };
   return (
     <div className="navbarContainer">
       <div>
         <div>
           <div className="sidebarTitle">
-            <h1>Trupti Treats</h1>
+            <Heading size='md'  marginTop="20px">Trupti Treats</Heading>
           </div>
           <Link to="/home">
             <div className="sidebarOption">
@@ -91,11 +91,12 @@ const navigate=useNavigate();
               {" "}
               <BiSolidExit size={20} color="white" />
             </div>
-            <div onClick={handleDayAndNight}>
-              {day ? (
-                <BsFillSunFill size={20} />
-              ) : (
+            <div onClick={handleDayAndNight}  style={containerStyle}>
+              {colorMode ==="light" ? (
+                
                 <MdNightlightRound size={20} />
+              ) : (
+                <BsFillSunFill size={20} style={{ backgroundColor: 'black'}} />
               )}
             </div>
           </div>
