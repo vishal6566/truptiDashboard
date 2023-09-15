@@ -74,6 +74,8 @@
   height: fit-content;
   transition: transform 0.3s ease;
   border: 1px solid #b5b6b8;
+  padding: 10px 10px;
+  text-align: center;
 }
 .orderCard:hover {
   cursor: pointer;

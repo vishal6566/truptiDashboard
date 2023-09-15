@@ -48,15 +48,15 @@ const Dashboard = () => {
         <div>
           <div>
             <p>All Orders</p>
-            <p>{loading?<Spinner color='teal.500' />:orders.totalOrdersCount}</p>
+            <p>{loading?<Spinner color='red.500' />:orders.totalOrdersCount}</p>
           </div>
           <div>
             <p>Total Order Value</p>
-            <p>₹ {loading?<Spinner color='teal.500' />: orders.totalAmount}</p>
+            <p>₹ {loading?<Spinner color='red.500' />: orders.totalAmount}</p>
           </div>
           <div>
             <p>Orders To Be Shipped</p>
-            <p>{loading?<Spinner color='teal.500' />: orders.unshippedOrdersCount}</p>
+            <p>{loading?<Spinner color='red.500' />: orders.unshippedOrdersCount}</p>
           </div>
         </div>
       </div>

@@ -11,13 +11,13 @@ import {
 } from "@chakra-ui/react";
 const CartPageCard = ({item,handleDecrement,handleIncrement,handleRemoveItem,calculateItemPrice}) => {
   return (
-    <div>
+    <div style={{padding:"10px 10px"}}>
          <Card key={item._id}
            direction={{ base: "column", sm: "row" }}
            overflow="hidden"
            variant="outline"
          >
-           <Image
+           <Image style={{margin:"10px 10px"}}
              objectFit="cover"
              maxW={{ base: "60%", sm: "150px" }}
              src={item.img}

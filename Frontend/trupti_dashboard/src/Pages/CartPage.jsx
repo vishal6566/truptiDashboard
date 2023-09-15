@@ -199,8 +199,8 @@ const CartPage = () => {
               mt={5}
             />
 
-            <Button colorScheme="red" mt={5} w="100%" type="submit">
-            {loading?<Spinner color='teal.500' />:"Place Order"}
+            <Button colorScheme="blue" mt={5} w="100%" type="submit">
+            {loading?<Spinner color='red.500' />:"Place Order"}
             </Button>
           </FormControl>
         </form>

@@ -96,7 +96,7 @@ navigate(`${id}`)
           </Menu>
         </div>
       </div>
-      <div>
+      {loading?<LoadingComponent />: <div>
       <TableContainer>
   <Table variant='simple'>
    
@@ -108,7 +108,7 @@ navigate(`${id}`)
         <Th>Shipped</Th>
       </Tr>
     </Thead>
-    {loading?<LoadingComponent />:<Tbody>
+    <Tbody>
     {orderItems.length===0?<EmptyContainer title={err?"PLEASE SIGNIN!" :"NO ORDERS"}
             info={err?"Navigate to Signin page by clicking on logout button":"No more orders to show"} />: 
             orderItems&&orderItems.map((order) => (
@@ -134,11 +134,12 @@ navigate(`${id}`)
                   
                 ))}
      
-    </Tbody>}
+    </Tbody>
     
   </Table>
 </TableContainer>
-      </div>
+      </div>}
+     
       <div>  {showFilter==="Not Shipped"?<div></div>:<PageNavigator hasMoreData={hasMoreData} page={page} setPage={setPage} />}</div>
     </div>
   )

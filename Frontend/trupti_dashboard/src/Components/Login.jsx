@@ -49,6 +49,8 @@ const Login = () => {
         })
         setLoading(false)
         setTimeout(()=>{
+         
+          
           navigate("/home")
         },1000)
       })
@@ -102,9 +104,7 @@ const Login = () => {
                 <Button colorScheme="blue" mt={5} w="100%" type="submit">
                 {loading?<Spinner color='red.500' />:"Sign In"}
                 </Button>
-                <Link to="/home"><Button colorScheme="blue" mt={5} w="100%" >
-             Temp Sign In
-                </Button>   </Link>
+                
               </FormControl>
             </form>
             <Box className="newUserBox">
