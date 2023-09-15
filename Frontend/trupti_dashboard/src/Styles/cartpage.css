@@ -37,6 +37,9 @@ border: 1px solid #f1f1f1;
     color: #2f8e81;
 }
  @media(max-width:800px){
+  .cartTitle{
+    padding:10px 10px;
+  }
   .cartContainer {
     width: 100%;
     display: flex;

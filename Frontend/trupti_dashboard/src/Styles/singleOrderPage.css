@@ -109,6 +109,9 @@
   font-size: 18px;
 }
 @media (max-width: 900px) {
+  .userInfoContainer{
+    padding: 10px 10px;
+  }
     .orderListContainer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);

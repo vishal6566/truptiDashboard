@@ -24,3 +24,8 @@
 .orderBlock {
   cursor: pointer;
 }
+@media(max-width:850px){
+  .orderTitle{
+    padding: 10px 10px;
+  }
+}
