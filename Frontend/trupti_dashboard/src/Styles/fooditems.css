@@ -27,7 +27,7 @@
   .itemsContainer{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    margin-top: 30px;
+   margin-left: 25px;
     gap: 10px;
 }
 .itemsTitle {
@@ -41,7 +41,7 @@
   .itemsContainer{
     display: grid;
     grid-template-columns: repeat(2,1fr);
-   
+    margin-left: 15px;
 }
 .itemsTitle {
   margin-top: 5px;

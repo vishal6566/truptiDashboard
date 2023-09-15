@@ -110,6 +110,10 @@
     .orderListContainer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      margin-left: 25px;
+    }
+    .singleOrderPageHeaderContainer{
+      margin-left: 5px;
     }
     .orderCard img {
        
@@ -121,6 +125,7 @@
   .orderListContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    margin-left: 15px;
   }
 
 }
