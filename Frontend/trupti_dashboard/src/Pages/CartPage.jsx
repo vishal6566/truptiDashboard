@@ -8,10 +8,12 @@ import {
   Input,
 } from "@chakra-ui/react";
 import CartPageCard from "../Components/CartPageCard";
+import { Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import { API } from "../utils/functionsAndimage";
 import EmptyContainer from "../Components/EmptyContainer";
 const CartPage = () => {
+  const [loading,setLoading]=useState(false)
   const toast = useToast();
   const getInitialCart = () => {
     const initialCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -106,6 +108,7 @@ const CartPage = () => {
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const orderData = {
         shippingInfo: shippingInfo,
@@ -118,12 +121,14 @@ const CartPage = () => {
         { headers:headers}
       );
       if (res.status === 201) {
+   
         toast({
           title: `order placed successfully`,
           status: "success",
           duration: 1000,
           isClosable: true,
         });
+        setLoading(false)
         updateCart([]);
         setShippingInfo({ ...shippingInfo, city: "", address: "" });
       } else {
@@ -133,9 +138,11 @@ const CartPage = () => {
           duration: 1000,
           isClosable: true,
         });
+        setLoading(false)
       }
     } catch (err) {
       let message = err.response.data.message;
+    
       toast({
         title: "Failed to place order",
         description: message,
@@ -143,6 +150,7 @@ const CartPage = () => {
         duration: 3000,
         isClosable: true,
       });
+      setLoading(false)
     }
   };
 
@@ -192,7 +200,7 @@ const CartPage = () => {
             />
 
             <Button colorScheme="red" mt={5} w="100%" type="submit">
-              Place Order
+            {loading?<Spinner color='teal.500' />:"Place Order"}
             </Button>
           </FormControl>
         </form>

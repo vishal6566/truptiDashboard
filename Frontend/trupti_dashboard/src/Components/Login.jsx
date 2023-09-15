@@ -3,6 +3,7 @@ import "../Styles/login.css";
 import { loginBannerImage, logo } from "../utils/functionsAndimage";
 import { Link, useNavigate } from 'react-router-dom';
 import { API } from "../utils/functionsAndimage";
+import { Spinner } from "@chakra-ui/react";
 import {
   FormControl,
   Button,
@@ -15,6 +16,7 @@ import {
 import SignUp from "./SignUp";
 import axios from "axios";
 const Login = () => {
+  const [loading,setLoading]=useState(false)
   const navigate=useNavigate()
   const toast = useToast()
   const [loginData, setLoginData] = useState({
@@ -32,7 +34,7 @@ const Login = () => {
   }
   const handleLoginSubmit =async (e) => {
     e.preventDefault();
-   
+   setLoading(true)
    await axios
       .post(`${API}/api/v1/login`, loginData,{
         headers: headers} )
@@ -45,12 +47,14 @@ const Login = () => {
           duration: 3000,
           isClosable: true,
         })
+        setLoading(false)
         setTimeout(()=>{
           navigate("/home")
         },1000)
       })
       .catch((err) => {
        let message=err.response.data.message;
+       setLoading(false)
        toast({
         title: 'SignIn Failed',
         description: message,
@@ -96,7 +100,7 @@ const Login = () => {
                 />
 
                 <Button colorScheme="blue" mt={5} w="100%" type="submit">
-                  Sign In
+                {loading?<Spinner color='red.500' />:"Sign In"}
                 </Button>
                 <Link to="/home"><Button colorScheme="blue" mt={5} w="100%" >
              Temp Sign In

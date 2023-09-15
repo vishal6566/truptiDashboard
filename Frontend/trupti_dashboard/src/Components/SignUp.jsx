@@ -20,7 +20,9 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { API } from "../utils/functionsAndimage";
+import { Spinner } from "@chakra-ui/react";
 const SignUp = () => {
+  const [loading,setLoading]=useState(false)
   const navigate=useNavigate()
   const toast=useToast()
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -40,7 +42,7 @@ const SignUp = () => {
   }
   const handleSignupSubmit = async(e) => {
     e.preventDefault();
-   
+   setLoading(true)
    await axios
       .post(`${API}/api/v1/register`, signupData,{
         headers: headers})
@@ -53,6 +55,7 @@ const SignUp = () => {
           duration: 3000,
           isClosable: true,
         })
+        setLoading(false)
        setTimeout(()=>{
         navigate("/home")
        },1000)
@@ -64,6 +67,7 @@ const SignUp = () => {
         if(message===`E11000 duplicate key error collection: trupti.users index: email_1 dup key: { email: "${signupData.email}" }`){
           message="Email is already registered."
         }
+        setLoading(false)
         toast({
          title: 'SignUp Failed',
          description: message,
@@ -141,7 +145,9 @@ const SignUp = () => {
             <Button variant="outline" mr={3} onClick={clearAndClose} >
               Cancel
             </Button>
-            <Button colorScheme="blue" type="submit">SignUp</Button>
+            <Button colorScheme="blue" type="submit">
+            {loading?<Spinner color='red.500' />:"Sign Up"}
+            </Button>
           </DrawerFooter>
           </form>
 

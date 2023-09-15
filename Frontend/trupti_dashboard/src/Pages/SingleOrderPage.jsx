@@ -12,6 +12,7 @@ import { useToast } from "@chakra-ui/react";
 import LoadingComponent from "../Components/LoadingComponent";
 import { API } from '../utils/functionsAndimage';
 const SingleOrderPage = () => {
+  const [btnLoading,setBtnLoading]=useState(false)
   const toast=useToast()
   const {colorMode}=useColorMode()
   const {id}=useParams();
@@ -35,6 +36,7 @@ const SingleOrderPage = () => {
   }
 const updateOrderStatus=async()=>{
   const id=order._id;
+  setBtnLoading(true)
   try{
     const res=await axios.put(`${API}/api/v1/order/${id}/shipped`,{withCredentials:true});
     
@@ -46,8 +48,10 @@ const updateOrderStatus=async()=>{
       duration: 2000,
       isClosable: true,
     });
+    setBtnLoading(false)
   }
   catch(err){
+    
     toast({
       title: 'Some Error Occured.',
 description:"Order Is Not Shipped.",
@@ -55,6 +59,7 @@ description:"Order Is Not Shipped.",
       duration: 2000,
       isClosable: true,
     });
+    setBtnLoading(false)
   }
 }
 
@@ -107,7 +112,7 @@ description:"Order Is Not Shipped.",
       </div>}  
     
 
-      {order.shipped && order.shipped ?<TrackShipmentContainer />: <ShipContainer updateOrder={updateOrderStatus} /> }
+      {order.shipped && order.shipped ?<TrackShipmentContainer />: <ShipContainer updateOrder={updateOrderStatus} loading={btnLoading} /> }
     </div>
   )
 }
