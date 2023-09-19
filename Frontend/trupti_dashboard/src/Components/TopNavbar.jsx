@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../Styles/topnavbar.css"
 import {
   Drawer,
@@ -22,7 +22,6 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { MdNightlightRound } from "react-icons/md";
 import { BsFillSunFill, BsFillCartFill } from "react-icons/bs";
-import axios from "axios";
 
 const TopNavbar = () => {
   const {toggleColorMode,colorMode}=useColorMode();

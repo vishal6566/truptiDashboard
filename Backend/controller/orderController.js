@@ -25,13 +25,14 @@ exports.getAllOrders = catchAsyncHandler(async (req, res, next) => {
   const page=parseInt(req.query.page) || 1;
   const limit=10;
   const skip=(page-1)*limit;
+  const totalOrders=await Order.find();
   const totalOrdersCount = await Order.countDocuments();
   const unshippedOrdersCount = await Order.countDocuments({ shipped: false });
   const unshippedOrders=await Order.find({shipped:false}).populate("user", "name").sort({createdAt:-1});
   const orders = await Order.find().populate("user", "name").skip(skip).limit(limit).sort({ createdAt: -1 });
 
   let totalAmount = 0;
-  orders.forEach((order) => {
+  totalOrders.forEach((order) => {
     totalAmount += order.totalPrice;
   });
   res.status(200).json({

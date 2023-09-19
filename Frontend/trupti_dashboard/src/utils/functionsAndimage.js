@@ -12,6 +12,6 @@ return value;
 }
 
 
-export const API="https://truptibackend.onrender.com"
+export const API="http://localhost:4000"
 
 

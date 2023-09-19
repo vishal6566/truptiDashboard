@@ -1,0 +1,33 @@
+version: '3'
+services:
+  front:
+    build:
+      context: 'C:\Users\Vishal\Desktop\trupti\truptiDashboard\Frontend\trupti_dashboard'
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    container_name: trupti-frontend-container
+    environment:
+      - WATCHPACK_POLLING=true
+    networks:
+      - trupti-mern-stack-network
+    volumes:
+      - C:\Users\Vishal\Desktop\trupti\truptiDashboard\Frontend\trupti_dashboard:/app
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: 'C:\Users\Vishal\Desktop\trupti\truptiDashboard\Backend'
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    container_name: trupti-backend-container
+    networks:
+      - trupti-mern-stack-network
+    volumes:
+      -  C:\Users\Vishal\Desktop\trupti\truptiDashboard\Backend:/app
+    env_file:
+      -   C:\Users\Vishal\Desktop\trupti\truptiDashboard\Backend\config\config.env
+
+networks:
+  trupti-mern-stack-network:
